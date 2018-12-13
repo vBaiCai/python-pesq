@@ -1,0 +1,8 @@
+*.WAV
+test.py
+*.pytest_cache/*
+build/*
+pypesq.egg-info
+dist/*
+*/__pycache__/*
+pypesq/__pycache__/*
