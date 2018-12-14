@@ -52,11 +52,11 @@ static PyObject *_pesq(PyObject *self, PyObject *args){
 
     //printf("%ld,%ld,%ld\n", ref->dimensions[0], deg->dimensions[0], fs);
     float pesq = compute_pesq(ref->data, deg->data, ref->dimensions[0], deg->dimensions[0], fs);
-    // printf("%f", pesq);
 
     // if(NULL==ref || NULL==deg){
     //     return NULL;
     // }
     return Py_BuildValue("f", pesq);
+    return PyFloat_FromDouble(pesq);
 }
 

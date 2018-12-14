@@ -125,7 +125,7 @@ void *safe_malloc (unsigned long size) {
     total_malloced += size;
     result = malloc (size);
     if (result == NULL) {
-        //printf ("malloc failed!\n");
+        printf ("malloc failed!\n");
     }
     return result;
 }

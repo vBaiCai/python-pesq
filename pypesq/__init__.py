@@ -9,6 +9,9 @@ def pesq(ref, deg, fs):
         deg: deg signal, 
         fs: sample rate,
     '''
+    ref = np.array(ref, copy=True)
+    deg = np.array(deg, copy=True)
+
     if fs not in [16000, 8000]:
         raise "sample rate must be 16000 or 8000"
 

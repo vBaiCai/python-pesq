@@ -123,7 +123,7 @@ void make_stereo_file2 (char *stereo_path_name, SIGNAL_INFO *ref_info, float *de
     buffer = (short *) safe_malloc (2 * n * sizeof (short));
     
     if ((outputFile = fopen (stereo_path_name, "wb")) == NULL) {
-        //printf ("MakeStereoFile : cannot open output file %s!", stereo_path_name);
+        printf ("MakeStereoFile : cannot open output file %s!", stereo_path_name);
         return;
     }
 
@@ -211,8 +211,7 @@ void load_src( long * Error_Flag, char ** Error_Type,
     {
         *Error_Flag = 1;
         *Error_Type = "Failed to allocate memory for source file";
-        //printf("xxxxxxxxxxxxxxxxxxxxx");
-        //printf ("%s!\n", *Error_Type);
+        printf ("%s!\n", *Error_Type);
         return;
     }
     read_ptr = sinfo->data;
@@ -238,7 +237,7 @@ void load_src( long * Error_Flag, char ** Error_Type,
     {
         *Error_Flag = 1;
         *Error_Type = "Failed to allocate memory for VAD";
-        //printf ("%s!\n", *Error_Type);
+        printf ("%s!\n", *Error_Type);
         return;
     }
 }
@@ -255,7 +254,7 @@ void alloc_other( SIGNAL_INFO * ref_info, SIGNAL_INFO * deg_info,
     {
         *Error_Flag = 2;
         *Error_Type = "Failed to allocate memory for temporary storage.";
-        //printf ("%s!\n", *Error_Type);
+        printf ("%s!\n", *Error_Type);
         return;
     }
 }

@@ -1,4 +1,4 @@
-from setuptools import setup, Extension
+from setuptools import setup, Extension, find_packages
 import numpy as np
 import os
 
@@ -10,9 +10,10 @@ extension = Extension("pesq_core",
 setup(name='pypesq',
     version='1.0',
     description="A package to compute pesq score.",
-    packages=['pypesq'],
+    packages=find_packages(),
     ext_modules=[extension],
     py_modules=['numpy'],
+    zip_safe=False,
     requirements=['numpy'],
     python_requires='!=3.0.*, !=3.1.*, !=3.2.*, <4',
 )

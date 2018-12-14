@@ -138,7 +138,6 @@ float compute_pesq(short * ref, short * deg, long ref_n_samples, long deg_n_samp
     pesq_measure (&ref_info, &deg_info, &err_info, &Error_Flag, &Error_Type, ref, deg, ref_n_samples, deg_n_samples, fs);
 
     float pesq_score = err_info.pesq_mos;
-    // printf("%.3f, %.3f\n", (double)err_info.pesq_mos, (double)err_info.mapped_mos);
     return pesq_score;
 }
 
@@ -252,29 +251,12 @@ void pesq_measure (SIGNAL_INFO * ref_info, SIGNAL_INFO * deg_info,
         
     if ((*Error_Flag) == 0)
     {
-        //printf ("Reading reference file %s...", ref_info-> path_name);
-
        load_src (Error_Flag, Error_Type, ref_info, ref_data, ref_n_samples, fs);
 
-    //    float *pdata = ref_info->data;
-    //    i = 16111;
-    //    while(i--) pdata++;
-    //    for(i=0;i<10;i++){
-    //        printf("%f, ", *(pdata++));
-
-    //    }
-    //    printf("\n ref_nsampels: %ld\n", ref_info->Nsamples);
-    //    if ((*Error_Flag) == 0)
-           //printf ("done.\n");
     }
     if ((*Error_Flag) == 0)
     {
-        //printf ("Reading degraded file %s...", deg_info-> path_name);
-
        load_src (Error_Flag, Error_Type, deg_info, deg_data, deg_n_samples, fs);
-    //    printf("\n deg_nsampels: %ld\n", deg_info->Nsamples);
-    //    if ((*Error_Flag) == 0)
-           //printf ("done.\n");
     }
 
     if (((ref_info-> Nsamples - 2 * SEARCHBUFFER * Downsample < Fs / 4) ||
@@ -298,11 +280,9 @@ void pesq_measure (SIGNAL_INFO * ref_info, SIGNAL_INFO * deg_info,
         long    i;
         FILE *resultsFile;
 
-        //printf (" Level normalization...\n");            
         fix_power_level (ref_info, "reference", maxNsamples);
         fix_power_level (deg_info, "degraded", maxNsamples);
 
-        //printf (" IRS filtering...\n"); 
         if( Fs == 16000 ) {
             WB_InIIR_Nsos = WB_InIIR_Nsos_16k;
             WB_InIIR_Hsos = WB_InIIR_Hsos_16k;
@@ -350,7 +330,6 @@ void pesq_measure (SIGNAL_INFO * ref_info, SIGNAL_INFO * deg_info,
     
         input_filter( ref_info, deg_info, ftmp );
 
-        //printf (" Variable delay compensation...\n");            
         calc_VAD (ref_info);
         calc_VAD (deg_info);
         
@@ -426,13 +405,13 @@ void pesq_measure (SIGNAL_INFO * ref_info, SIGNAL_INFO * deg_info,
             long start, end;
 
             if (0 != fseek (resultsFile, 0, SEEK_SET)) {
-                //printf ("Could not move to start of results file %s!\n", ITU_RESULTS_FILE);
+                printf ("Could not move to start of results file %s!\n", ITU_RESULTS_FILE);
                 exit (1);
             }
             start = ftell (resultsFile);
 
             if (0 != fseek (resultsFile, 0, SEEK_END)) {
-                //printf ("Could not move to end of results file %s!\n", ITU_RESULTS_FILE);
+                printf ("Could not move to end of results file %s!\n", ITU_RESULTS_FILE);
                 exit (1);
             }
             end = ftell (resultsFile);

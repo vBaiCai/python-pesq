@@ -857,7 +857,7 @@ void pesq_psychoacoustic_model(SIGNAL_INFO    * ref_info,
         abs_thresh_power = abs_thresh_power_16k;
         break;
     default:
-        //printf ("Invalid sample frequency!\n");
+        printf ("Invalid sample frequency!\n");
         exit (1);
     }
 
@@ -942,7 +942,7 @@ void pesq_psychoacoustic_model(SIGNAL_INFO    * ref_info,
         short_term_fft (Nf, ref_info, Whanning, start_sample_ref, hz_spectrum_ref, fft_tmp);
         
         if (err_info-> Nutterances < 1) {
-            //printf ("Processing error!\n");
+            printf ("Processing error!\n");
             exit (1);
         }
 
