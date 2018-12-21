@@ -13,10 +13,10 @@ def pesq(ref, deg, fs):
     deg = np.array(deg, copy=True)
 
     if fs not in [16000, 8000]:
-        raise "sample rate must be 16000 or 8000"
+        raise ValueError("sample rate must be 16000 or 8000")
 
     if fabs(len(ref) - len(deg)) > fs / 4:
-        raise "ref and deg signals should be in same length."
+        raise ValueError("ref and deg signals should be in same length.")
 
     if ref.dtype != np.int16:
         ref *= 32768
