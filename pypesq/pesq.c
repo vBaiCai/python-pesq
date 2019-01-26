@@ -7,12 +7,11 @@
 
 static char module_docstring[] = 
     "This module provides an interface for calculate PESQ.";
-
 static char pesq_docstring[] = 
     "Compute PESQ.";
-
 static PyObject *_pesq(PyObject *self, PyObject *arg);
 
+#if PY_MAJOR_VERSION >= 3
 static PyMethodDef module_methods[] = {
     {"_pesq", _pesq, METH_VARARGS, pesq_docstring},
     {NULL, NULL, 0, NULL}
@@ -31,6 +30,24 @@ PyMODINIT_FUNC PyInit_pesq_core(void){
     return PyModule_Create(&pesqmodule);
 };
 
+#else 
+static PyMethodDef PesqCoreMethods[] = {
+    {"_pesq", _pesq, METH_VARARGS, module_docstring},
+    {NULL, NULL, 0, NULL}
+};
+
+PyMODINIT_FUNC
+initpesq_core(void){
+    PyObject *m;
+    import_array();     //essential for numpy
+
+    m = Py_InitModule("pesq_core", PesqCoreMethods);
+    if (m == NULL)
+        return;
+
+}
+#endif
+
 static PyObject *_pesq(PyObject *self, PyObject *args){
 
     PyArrayObject *ref, *deg;
@@ -41,22 +58,7 @@ static PyObject *_pesq(PyObject *self, PyObject *args){
         return NULL;
     }
 
-    // change continuous arrays into C *array
-    // int i;
-    // float *cref = (float*)ref->data;
-    // for(i=0; i<5; i++){
-    //     //printf("%.9g\n", *(cref++));
-    // }
-    // //printf("%i\n", ref->strides[0]);
-    // //printf("%i\n", ref->nd);
-
-    //printf("%ld,%ld,%ld\n", ref->dimensions[0], deg->dimensions[0], fs);
     float pesq = compute_pesq(ref->data, deg->data, ref->dimensions[0], deg->dimensions[0], fs);
 
-    // if(NULL==ref || NULL==deg){
-    //     return NULL;
-    // }
     return Py_BuildValue("f", pesq);
-    return PyFloat_FromDouble(pesq);
 }
-

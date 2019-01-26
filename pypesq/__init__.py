@@ -12,10 +12,13 @@ def pesq(ref, deg, fs):
     ref = np.array(ref, copy=True)
     deg = np.array(deg, copy=True)
 
+    if ref.ndim != 1 or deg.ndim != 1:
+        raise ValueError("signals must be 1-D array ")
+
     if fs not in [16000, 8000]:
         raise ValueError("sample rate must be 16000 or 8000")
 
-    if fabs(len(ref) - len(deg)) > fs / 4:
+    if fabs(ref.shape[0] - deg.shape[0]) > fs / 4:
         raise ValueError("ref and deg signals should be in same length.")
 
     if ref.dtype != np.int16:

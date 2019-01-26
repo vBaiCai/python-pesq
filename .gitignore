@@ -9,3 +9,4 @@ pypesq/__pycache__/*
 .vscode
 *.so
 *.wav
+*.pyc
