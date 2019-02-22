@@ -1,5 +1,5 @@
 # PyPESQ
-Pypesq is a python wrapper for the PESQ score calculation C routine. It's only can be used in evaluation purpose.
+Pypesq is a python wrapper for the PESQ score calculation C routine. It only can be used in evaluation purpose.
 
 ## INSTALL
 ```
