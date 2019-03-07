@@ -12,6 +12,9 @@ def pesq(ref, deg, fs):
     ref = np.array(ref, copy=True)
     deg = np.array(deg, copy=True)
 
+    ref = 0.999*ref/np.max(np.abs(ref))
+    deg = 0.999*deg/np.max(np.abs(deg))
+
     if ref.ndim != 1 or deg.ndim != 1:
         raise ValueError("signals must be 1-D array ")
 
