@@ -30,4 +30,5 @@ OWNERS of PESQ ARE:
 * [massover/accel](https://github.com/massover/accel)
 
 #  TODO
-1. more test
+1. More test.
+2. I'm not suer whether to add the wav normalization.
