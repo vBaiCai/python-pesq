@@ -31,4 +31,4 @@ OWNERS of PESQ ARE:
 
 #  TODO
 1. More test.
-2. I'm not suer whether to add the wav normalization.
+2. I'm not sure whether to add the wav normalization.
