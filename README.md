@@ -3,7 +3,7 @@ Pypesq is a python wrapper for the PESQ score calculation C routine. It only can
 
 ## INSTALL
 ```
-python setup.py install
+pip install https://github.com/vBaiCai/python-pesq/archive/master.zip
 ```
 
 ## HOW TO USE
