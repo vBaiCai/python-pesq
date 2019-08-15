@@ -116,7 +116,7 @@ Further information is also available from www.pesq.org
 
 #define LINIIR 60
 
-#define MAXNUTTERANCES 50
+#define MAXNUTTERANCES 99999
 
 #define WHOLE_SIGNAL -1
 

@@ -804,7 +804,7 @@ void pesq_psychoacoustic_model(SIGNAL_INFO    * ref_info,
 
     float   peak;
 
-#define    MAX_NUMBER_OF_BAD_INTERVALS        1000
+#define    MAX_NUMBER_OF_BAD_INTERVALS        99999
 
     int        *frame_is_bad; 
     int        *smeared_frame_is_bad; 
