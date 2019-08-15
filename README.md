@@ -3,7 +3,7 @@ Pypesq is a python wrapper for the PESQ score calculation C routine. It only can
 
 ## INSTALL
 ```
-python setup.py install
+pip install https://github.com/vBaiCai/python-pesq/archive/master.zip
 ```
 
 ## HOW TO USE
@@ -32,3 +32,7 @@ OWNERS of PESQ ARE:
 #  TODO
 1. More test.
 2. I'm not sure whether to add the wav normalization.
+
+# HINT
+The PESQ contain 3 types of values: `NB PESQ MOS`, `NB MOS LQO`, `WB MOS LQO`.
+This package only return the `NB PESQ MOS` score, which represents the `Raw MOS` for `narrowband handset listening`.
