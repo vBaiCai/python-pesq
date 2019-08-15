@@ -2,7 +2,7 @@ import numpy as np
 from pesq_core import _pesq
 from math import fabs
 
-def pesq(ref, deg, fs):
+def pesq(ref, deg, fs=16000, normalize=False):
     '''
     params:
         ref: ref signal,
@@ -12,8 +12,15 @@ def pesq(ref, deg, fs):
     ref = np.array(ref, copy=True)
     deg = np.array(deg, copy=True)
 
-    ref = 0.999*ref/np.max(np.abs(ref))
-    deg = 0.999*deg/np.max(np.abs(deg))
+    if normalize:
+        ref = 0.95 * ref/np.max(np.abs(ref))
+        deg = 0.95 * deg/np.max(np.abs(deg))
+
+    max_sample = np.max(np.abs(np.array([ref, deg])))
+    if max_sample > 1:
+        c = 1 / max_sample * 0.95 
+        ref = ref * c
+        deg = deg * c
 
     if ref.ndim != 1 or deg.ndim != 1:
         raise ValueError("signals must be 1-D array ")
