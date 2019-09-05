@@ -1,6 +1,7 @@
 import numpy as np
 from pesq_core import _pesq
 from math import fabs
+EPSILON = 1e-6
 
 def pesq(ref, deg, fs=16000, normalize=False):
     '''
@@ -13,12 +14,12 @@ def pesq(ref, deg, fs=16000, normalize=False):
     deg = np.array(deg, copy=True)
 
     if normalize:
-        ref = 0.95 * ref/np.max(np.abs(ref))
-        deg = 0.95 * deg/np.max(np.abs(deg))
+        ref = ref/np.max(np.abs(ref)) if np.abs(ref) > EPSILON else ref 
+        deg = deg/np.max(np.abs(deg)) if np.abs(deg) > EPSILON else deg
 
     max_sample = np.max(np.abs(np.array([ref, deg])))
     if max_sample > 1:
-        c = 1 / max_sample * 0.95 
+        c = 1 / max_sample
         ref = ref * c
         deg = deg * c
 
@@ -31,12 +32,18 @@ def pesq(ref, deg, fs=16000, normalize=False):
     if fabs(ref.shape[0] - deg.shape[0]) > fs / 4:
         raise ValueError("ref and deg signals should be in same length.")
 
+    if np.count_nonzero(ref==0) == ref.size:
+        raise ValueError("ref is all zeros, processing error! ")
+
+    if np.count_nonzero(deg==0) == deg.size:
+        raise ValueError("deg is all zeros, pesq score is nan! ")
+
     if ref.dtype != np.int16:
-        ref *= 32768
+        ref *= 32767
         ref = ref.astype(np.int16)
 
     if deg.dtype != np.int16:
-        deg *= 32768
+        deg *= 32767
         deg = deg.astype(np.int16)
 
     score = _pesq(ref, deg, fs)
