@@ -102,6 +102,7 @@ Further information is also available from www.pesq.org
 
 *****************************************************************************/
 
+#include <Python.h>
 #include <math.h>
 #include <stdio.h>
 #include "pesq.h"
@@ -942,8 +943,9 @@ void pesq_psychoacoustic_model(SIGNAL_INFO    * ref_info,
         short_term_fft (Nf, ref_info, Whanning, start_sample_ref, hz_spectrum_ref, fft_tmp);
         
         if (err_info-> Nutterances < 1) {
-            printf ("Processing error!\n");
-            exit (1);
+            /*printf ("Processing error!\n");*/
+            /*exit (1);*/
+            PyErr_SetString(PyExc_RuntimeError, "processing error!");
         }
 
         utt = err_info-> Nutterances - 1;

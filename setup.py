@@ -2,9 +2,15 @@ from setuptools import setup, Extension, find_packages
 from setuptools.command.build_ext import build_ext as _build_ext
 import os
 
+try:
+    import numpy as np
+    includes = [os.path.join(np.get_include(), 'numpy')] 
+except:
+    includes = []
+
 extension = Extension("pesq_core",
                       sources=["pypesq/pesq.c", "pypesq/dsp.c", "pypesq/pesqdsp.c", "pypesq/pesqio.c", "pypesq/pesqmain.c", "pypesq/pesqmod.c"],
-                      # include_dirs=[os.path.join(np.get_include(), 'numpy')], 
+                      include_dirs=includes, 
                       language='c++')
 
 class build_ext(_build_ext):

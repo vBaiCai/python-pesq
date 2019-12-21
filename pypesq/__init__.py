@@ -1,3 +1,4 @@
+import warnings
 import numpy as np
 from pesq_core import _pesq
 from math import fabs
@@ -46,6 +47,10 @@ def pesq(ref, deg, fs=16000, normalize=False):
         deg *= 32767
         deg = deg.astype(np.int16)
 
-    score = _pesq(ref, deg, fs)
+    try:
+        score = _pesq(ref, deg, fs)
+    except:
+        warnings.warn('Processing Error! return NaN')
+        score = np.NAN
 
     return score
