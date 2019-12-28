@@ -2,11 +2,12 @@ from setuptools import setup, Extension, find_packages
 from setuptools.command.build_ext import build_ext as _build_ext
 import os
 
+includes = ['pypesq']
 try:
     import numpy as np
-    includes = [os.path.join(np.get_include(), 'numpy')] 
+    includes += [os.path.join(np.get_include(), 'numpy')] 
 except:
-    includes = []
+    pass
 
 extension = Extension("pesq_core",
                       sources=["pypesq/pesq.c", "pypesq/dsp.c", "pypesq/pesqdsp.c", "pypesq/pesqio.c", "pypesq/pesqmain.c", "pypesq/pesqmod.c"],
@@ -22,7 +23,7 @@ class build_ext(_build_ext):
 
 
 setup(name='pypesq',
-    version='1.1',
+    version='1.2.4',
     description="A package to compute pesq score.",
     url='https://github.com/vBaiCai/python-pesq',
     author_email='zhuroubaicai@gmail.com',
