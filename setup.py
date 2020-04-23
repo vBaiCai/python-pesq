@@ -12,7 +12,7 @@ except:
 extension = Extension("pesq_core",
                       sources=["pypesq/pesq.c", "pypesq/dsp.c", "pypesq/pesqdsp.c", "pypesq/pesqio.c", "pypesq/pesqmain.c", "pypesq/pesqmod.c"],
                       include_dirs=includes, 
-                      language='c++')
+                      language='c')
 
 class build_ext(_build_ext):
     def finalize_options(self):

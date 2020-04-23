@@ -11,10 +11,10 @@ Version 2.0 - October 2005.
 DEFINITIONS:
 ------------
 For the purposes of this Intellectual Property Rights Notice
-the terms ‘Perceptual Evaluation of Speech Quality Algorithm’
-and ‘PESQ Algorithm’ refer to the objective speech quality
+the terms æ…žerceptual Evaluation of Speech Quality Algorithmï¿½
+and æ…žESQ Algorithmï¿½ refer to the objective speech quality
 measurement algorithm defined in ITU-T Recommendation P.862;
-the term ‘PESQ Software’ refers to the C-code component of P.862.
+the term æ…žESQ Softwareï¿½ refers to the C-code component of P.862.
 These definitions also apply to those parts of ITU-T Recommendation 
 P.862.2 and its associated source code that are common with P.862.
 
@@ -101,40 +101,43 @@ AGREEMENT. PESQ PATENT-ONLY LICENSE AGREEMENTS MAY BE OBTAINED FROM OPTICOM.
 Further information is also available from www.pesq.org
 
 *****************************************************************************/
+#ifndef _DSP_H_H
+#define _DSP_H_H
 
 #ifndef min
-  #define min(a,b)  (((a) < (b)) ? (a) : (b))
+#define min(a, b) (((a) < (b)) ? (a) : (b))
 #endif
 
 #ifndef max
-  #define max(a,b)  (((a) > (b)) ? (a) : (b))
+#define max(a, b) (((a) > (b)) ? (a) : (b))
 #endif
 
 #ifndef DSP_INCLUDED
-  #define DSP_INCLUDED
-   void *safe_malloc (unsigned long);
-   void safe_free (void *);
+#define DSP_INCLUDED
+void *safe_malloc(unsigned long);
+void safe_free(void *);
 
-  void IIRFilt(
-    float * h, unsigned long Nsos, float * z,
-    float * x, unsigned long Nx, float * y );
+void IIRFilt(
+    float *h, unsigned long Nsos, float *z,
+    float *x, unsigned long Nx, float *y);
 
-  unsigned long nextpow2(unsigned long X);
-  int ispow2(unsigned long X);
-  int intlog2(unsigned long X);
-  void FFTInit(unsigned long N);
-  void FFTFree(void);
-  void RealFFT(float * x, unsigned long N);
-  void RealIFFT(float * x, unsigned long N);
-  unsigned long FFTNXCorr(
-    float * x1, unsigned long n1, float * x2, unsigned long n2, float * y );
-  void IIRsos(
-    float * x, unsigned long Nx,
+unsigned long nextpow2(unsigned long X);
+int ispow2(unsigned long X);
+int intlog2(unsigned long X);
+void FFTInit(unsigned long N);
+void FFTFree(void);
+void RealFFT(float *x, unsigned long N);
+void RealIFFT(float *x, unsigned long N);
+unsigned long FFTNXCorr(
+    float *x1, unsigned long n1, float *x2, unsigned long n2, float *y);
+void IIRsos(
+    float *x, unsigned long Nx,
     float b0, float b1, float b2, float a1, float a2,
-    float * tz1, float * tz2 );
-  void IIRFilt(
-    float * h, unsigned long Nsos, float * z,
-    float * x, unsigned long Nx, float * y );
+    float *tz1, float *tz2);
+void IIRFilt(
+    float *h, unsigned long Nsos, float *z,
+    float *x, unsigned long Nx, float *y);
 #endif
 
+#endif // _DSP_H_H
 /* END OF FILE */
