@@ -11,10 +11,10 @@ Version 2.0 - October 2005.
 DEFINITIONS:
 ------------
 For the purposes of this Intellectual Property Rights Notice
-the terms �Perceptual Evaluation of Speech Quality Algorithm�
-and �PESQ Algorithm� refer to the objective speech quality
+the terms 'Perceptual Evaluation of Speech Quality Algorithm'
+and 'PESQ Algorithm' refer to the objective speech quality
 measurement algorithm defined in ITU-T Recommendation P.862;
-the term �PESQ Software� refers to the C-code component of P.862.
+the term 锟絇ESQ Software锟� refers to the C-code component of P.862.
 These definitions also apply to those parts of ITU-T Recommendation 
 P.862.2 and its associated source code that are common with P.862.
 
@@ -99,8 +99,10 @@ AGREEMENT. PESQ PATENT-ONLY LICENSE AGREEMENTS MAY BE OBTAINED FROM OPTICOM.
 ***********************************************************************
 
 Further information is also available from www.pesq.org
-
 *****************************************************************************/
+
+#ifndef _PESQ_H_H
+#define _PESQ_H_H
 
 #include <string.h>
 #include <stdlib.h>
@@ -113,7 +115,6 @@ Further information is also available from www.pesq.org
 #define FALSE 0
 #endif
 
-
 #define LINIIR 60
 
 #define MAXNUTTERANCES 99999
@@ -125,7 +126,7 @@ Further information is also available from www.pesq.org
 #define LFBANK 35
 
 #define DATAPADDING_MSECS 320
-#define SEARCHBUFFER 75  
+#define SEARCHBUFFER 75
 
 #define EPS 1E-12
 
@@ -140,15 +141,15 @@ Further information is also available from www.pesq.org
 
 #define TWOPI 6.28318530717959
 
-int Nb ;
+extern int Nb;
 
 #define Nfmax 512
 
-#define Sp_8k   2.764344e-5
-#define Sl_8k   1.866055e-1
+#define Sp_8k 2.764344e-5
+#define Sl_8k 1.866055e-1
 
-#define Sp_16k  6.910853e-006
-#define Sl_16k  1.866055e-001
+#define Sp_16k 6.910853e-006
+#define Sl_16k 1.866055e-001
 
 extern float Sp;
 extern float Sl;
@@ -165,56 +166,56 @@ extern float Sl;
 
 #define Tn 0.01f
 
-
 #ifndef min
-  #define min(a,b)  (((a) < (b)) ? (a) : (b))
+#define min(a, b) (((a) < (b)) ? (a) : (b))
 #endif
 
 #ifndef max
-  #define max(a,b)  (((a) > (b)) ? (a) : (b))
+#define max(a, b) (((a) > (b)) ? (a) : (b))
 #endif
 
 #define NB_MODE 0
 #define WB_MODE 1
 
-typedef struct {
-  char  path_name[512];
-  char  file_name [128];
-  long  Nsamples;
-  long  apply_swap;
-  long  input_filter;
+typedef struct
+{
+       char path_name[512];
+       char file_name[128];
+       long Nsamples;
+       long apply_swap;
+       long input_filter;
 
-  float * data;
-  float * VAD;
-  float * logVAD;
+       float *data;
+       float *VAD;
+       float *logVAD;
 } SIGNAL_INFO;
 
-typedef struct {
-  long Nutterances;
-  long Largest_uttsize;
-  long Nsurf_samples;
+typedef struct
+{
+       long Nutterances;
+       long Largest_uttsize;
+       long Nsurf_samples;
 
-  long  Crude_DelayEst;
-  float Crude_DelayConf;
-  long  UttSearch_Start[MAXNUTTERANCES];
-  long  UttSearch_End[MAXNUTTERANCES];
-  long  Utt_DelayEst[MAXNUTTERANCES];
-  long  Utt_Delay[MAXNUTTERANCES];
-  float Utt_DelayConf[MAXNUTTERANCES];
-  long  Utt_Start[MAXNUTTERANCES];
-  long  Utt_End[MAXNUTTERANCES];
+       long Crude_DelayEst;
+       float Crude_DelayConf;
+       long UttSearch_Start[MAXNUTTERANCES];
+       long UttSearch_End[MAXNUTTERANCES];
+       long Utt_DelayEst[MAXNUTTERANCES];
+       long Utt_Delay[MAXNUTTERANCES];
+       float Utt_DelayConf[MAXNUTTERANCES];
+       long Utt_Start[MAXNUTTERANCES];
+       long Utt_End[MAXNUTTERANCES];
 
-  float pesq_mos;
-  float mapped_mos;
+       float pesq_mos;
+       float mapped_mos;
 
-  short mode;
+       short mode;
 
 } ERROR_INFO;
 
-
 extern long Fs;
 extern long Downsample;
-extern float * InIIR_Hsos;
+extern float *InIIR_Hsos;
 extern long Align_Nfft;
 
 extern long Fs_8k;
@@ -227,78 +228,73 @@ extern long Downsample_16k;
 extern long InIIR_Nsos_16k;
 extern long Align_Nfft_16k;
 
-extern float * InIIR_Hsos;
-
 void input_filter(
-       SIGNAL_INFO * ref_info, SIGNAL_INFO * deg_info, float * ftmp );
-void apply_filters( float * data, long Nsamples );
-void make_stereo_file (char *, SIGNAL_INFO *, SIGNAL_INFO *);
-void make_stereo_file2 (char *, SIGNAL_INFO *, float *);
-void select_rate( long sample_rate,
-     long * Error_Flag, char ** Error_Type );
-int  file_exist( char * fname );
-void load_src( long * Error_Flag, char ** Error_Type,
-     SIGNAL_INFO * sinfo, short * data, long n_samples, long fs);
-void alloc_other( SIGNAL_INFO * ref_info, SIGNAL_INFO * deg_info, 
-    long * Error_Flag, char ** Error_Type, float ** ftmp);
-void calc_VAD( SIGNAL_INFO * pinfo );
-int  id_searchwindows( SIGNAL_INFO * ref_info, SIGNAL_INFO * deg_info,
-       ERROR_INFO * err_info );
-void id_utterances( SIGNAL_INFO * ref_info, SIGNAL_INFO * deg_info,
-       ERROR_INFO * err_info );
-void utterance_split( SIGNAL_INFO * ref_info, SIGNAL_INFO * deg_info,
-       ERROR_INFO * err_info, float * ftmp );
-void utterance_locate( SIGNAL_INFO * ref_info, SIGNAL_INFO * deg_info,
-       ERROR_INFO * err_info, float * ftmp );
-void auditory_transform( SIGNAL_INFO * ref_info, SIGNAL_INFO * deg_info,
-       ERROR_INFO * err_info, long Utt_id, float * ftmp);
-void calc_err( SIGNAL_INFO * ref_info, SIGNAL_INFO * deg_info, 
-       ERROR_INFO * err_info, long Utt_id);
-void extract_params( SIGNAL_INFO * ref_info, SIGNAL_INFO * deg_info,
-    ERROR_INFO * err_info, long Utt_id, float * ftmp );
-void utterance_process(SIGNAL_INFO * ref_info, SIGNAL_INFO * deg_info,
-       ERROR_INFO * err_info, long Utt_id, float * ftmp);
-void DC_block( float * data, long Nsamples );
-void apply_filter ( float * data, long Nsamples, int, double [][2] );
-double pow_of (const float * const , long , long, long);
+    SIGNAL_INFO *ref_info, SIGNAL_INFO *deg_info, float *ftmp);
+void apply_filters(float *data, long Nsamples);
+void make_stereo_file(char *, SIGNAL_INFO *, SIGNAL_INFO *);
+void make_stereo_file2(char *, SIGNAL_INFO *, float *);
+void select_rate(long sample_rate,
+                 long *Error_Flag, char **Error_Type);
+int file_exist(char *fname);
+void load_src(long *Error_Flag, char **Error_Type,
+              SIGNAL_INFO *sinfo, short *data, long n_samples, long fs);
+void alloc_other(SIGNAL_INFO *ref_info, SIGNAL_INFO *deg_info,
+                 long *Error_Flag, char **Error_Type, float **ftmp);
+void calc_VAD(SIGNAL_INFO *pinfo);
+int id_searchwindows(SIGNAL_INFO *ref_info, SIGNAL_INFO *deg_info,
+                     ERROR_INFO *err_info);
+void id_utterances(SIGNAL_INFO *ref_info, SIGNAL_INFO *deg_info,
+                   ERROR_INFO *err_info);
+void utterance_split(SIGNAL_INFO *ref_info, SIGNAL_INFO *deg_info,
+                     ERROR_INFO *err_info, float *ftmp);
+void utterance_locate(SIGNAL_INFO *ref_info, SIGNAL_INFO *deg_info,
+                      ERROR_INFO *err_info, float *ftmp);
+void auditory_transform(SIGNAL_INFO *ref_info, SIGNAL_INFO *deg_info,
+                        ERROR_INFO *err_info, long Utt_id, float *ftmp);
+void calc_err(SIGNAL_INFO *ref_info, SIGNAL_INFO *deg_info,
+              ERROR_INFO *err_info, long Utt_id);
+void extract_params(SIGNAL_INFO *ref_info, SIGNAL_INFO *deg_info,
+                    ERROR_INFO *err_info, long Utt_id, float *ftmp);
+void utterance_process(SIGNAL_INFO *ref_info, SIGNAL_INFO *deg_info,
+                       ERROR_INFO *err_info, long Utt_id, float *ftmp);
+void DC_block(float *data, long Nsamples);
+void apply_filter(float *data, long Nsamples, int, double[][2]);
+double pow_of(const float *const, long, long, long);
 void apply_VAD(
-     SIGNAL_INFO * pinfo, float * data, float * VAD, float * logVAD );
+    SIGNAL_INFO *pinfo, float *data, float *VAD, float *logVAD);
 void crude_align(
-     SIGNAL_INFO * ref_info, SIGNAL_INFO * deg_info, ERROR_INFO * err_info,
-     long Utt_id, float * ftmp);
+    SIGNAL_INFO *ref_info, SIGNAL_INFO *deg_info, ERROR_INFO *err_info,
+    long Utt_id, float *ftmp);
 void time_align(
-     SIGNAL_INFO * ref_info, SIGNAL_INFO * deg_info, ERROR_INFO * err_info,
-     long Utt_id, float * ftmp );
-void split_align( SIGNAL_INFO * ref_info, SIGNAL_INFO * deg_info,
-     ERROR_INFO * err_info, float * ftmp,
-     long Utt_Start, long Utt_SpeechStart, long Utt_SpeechEnd, long Utt_End,
-     long Utt_DelayEst, float Utt_DelayConf,
-     long * Best_ED1, long * Best_D1, float * Best_DC1,
-     long * Best_ED2, long * Best_D2, float * Best_DC2,
-     long * Best_BP );
+    SIGNAL_INFO *ref_info, SIGNAL_INFO *deg_info, ERROR_INFO *err_info,
+    long Utt_id, float *ftmp);
+void split_align(SIGNAL_INFO *ref_info, SIGNAL_INFO *deg_info,
+                 ERROR_INFO *err_info, float *ftmp,
+                 long Utt_Start, long Utt_SpeechStart, long Utt_SpeechEnd, long Utt_End,
+                 long Utt_DelayEst, float Utt_DelayConf,
+                 long *Best_ED1, long *Best_D1, float *Best_DC1,
+                 long *Best_ED2, long *Best_D2, float *Best_DC2,
+                 long *Best_BP);
 void pesq_psychoacoustic_model(
-SIGNAL_INFO * ref_info, SIGNAL_INFO * deg_info,
-ERROR_INFO * err_info, float * ftmp);
-void apply_pesq( float * x_data, float * ref_surf,
-float * y_data, float * deg_surf, long NVAD_windows, float * ftmp,
-ERROR_INFO * err_info );
-void pesq_measure (SIGNAL_INFO * ref_info, SIGNAL_INFO * deg_info,
-    ERROR_INFO * err_info, long * Error_Flag, char ** Error_Type, short * ref_data, short * deg_data, long ref_n_samples, long deg_n_samples, long fs);
-float compute_pesq(short * ref, short * deg, long ref_n_samples, long deg_n_samples, long fs);
+    SIGNAL_INFO *ref_info, SIGNAL_INFO *deg_info,
+    ERROR_INFO *err_info, float *ftmp);
+void apply_pesq(float *x_data, float *ref_surf,
+                float *y_data, float *deg_surf, long NVAD_windows, float *ftmp,
+                ERROR_INFO *err_info);
+void pesq_measure(SIGNAL_INFO *ref_info, SIGNAL_INFO *deg_info,
+                  ERROR_INFO *err_info, long *Error_Flag, char **Error_Type, short *ref_data, short *deg_data, long ref_n_samples, long deg_n_samples, long fs);
+float compute_pesq(short *ref, short *deg, long ref_n_samples, long deg_n_samples, long fs);
 
+#define D_POW_F 2
+#define D_POW_S 6
+#define D_POW_T 2
 
+#define A_POW_F 1
+#define A_POW_S 6
+#define A_POW_T 2
 
-#define     D_POW_F     2
-#define     D_POW_S     6
-#define     D_POW_T     2
+#define D_WEIGHT 0.1
+#define A_WEIGHT 0.0309
 
-#define     A_POW_F     1
-#define     A_POW_S     6
-#define     A_POW_T     2
-
-
-#define     D_WEIGHT    0.1
-#define     A_WEIGHT    0.0309
-
+#endif // _PESQ_H_H
 /* END OF FILE */
-
