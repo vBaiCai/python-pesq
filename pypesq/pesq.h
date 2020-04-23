@@ -11,8 +11,8 @@ Version 2.0 - October 2005.
 DEFINITIONS:
 ------------
 For the purposes of this Intellectual Property Rights Notice
-the terms 锟絇erceptual Evaluation of Speech Quality Algorithm锟�
-and 锟絇ESQ Algorithm锟� refer to the objective speech quality
+the terms 'Perceptual Evaluation of Speech Quality Algorithm'
+and 'PESQ Algorithm' refer to the objective speech quality
 measurement algorithm defined in ITU-T Recommendation P.862;
 the term 锟絇ESQ Software锟� refers to the C-code component of P.862.
 These definitions also apply to those parts of ITU-T Recommendation 
